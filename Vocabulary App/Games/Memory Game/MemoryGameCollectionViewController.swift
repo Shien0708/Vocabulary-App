@@ -83,13 +83,17 @@ class MemoryGameCollectionViewController: UICollectionViewController {
     @IBAction func check(_ sender: UIButton) {
         let index = Int((sender.titleLabel?.text)!)!
         var i = 0
+        
         while !allButtons[i].isTouchInside {
             i += 1
         }
+        
         if touchedItemIndexes.count == 2 {
             touchedItemIndexes.removeAll()
         }
+        
         touchedItemIndexes.append(i)
+        
         for i in touchedItemIndexes {
             allButtons[i].isEnabled = false
         }
@@ -99,8 +103,10 @@ class MemoryGameCollectionViewController: UICollectionViewController {
         allImageViews[i].image = UIImage(named: "shellBack")
         allWords[i].isHidden = false
         
+        //點擊第二個貝殼
         if !isFirstTouch {
             isFirstTouch = true
+            //答錯
             if index != preOpenIndex {
                 for button in allButtons {
                     button.isEnabled = false
@@ -119,7 +125,7 @@ class MemoryGameCollectionViewController: UICollectionViewController {
                     }
                 })
                 
-            } else {
+            } else { //答對
                 for i in touchedItemIndexes {
                     openedItemIndexes.append(i)
                     allButtons[i].isEnabled = false
@@ -127,7 +133,7 @@ class MemoryGameCollectionViewController: UICollectionViewController {
                 }
                 if matchCounts == allButtons.count {
                     timer?.invalidate()
-                    openedItemIndexes.removeAll()
+                    
                     againButton.isHidden = false
                 }
                 
@@ -143,6 +149,8 @@ class MemoryGameCollectionViewController: UICollectionViewController {
     
     
     @IBAction func playAgain(_ sender: Any) {
+        openedItemIndexes.removeAll()
+        touchedItemIndexes.removeAll()
         showQuestions()
         setTimer()
         collectionView.reloadData()

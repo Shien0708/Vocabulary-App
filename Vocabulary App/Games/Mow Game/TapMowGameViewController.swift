@@ -70,6 +70,7 @@ class TapMowGameViewController: UIViewController {
         }
         answerIndex = options[Int.random(in: 0...options.count-1)].1
         if isChineseQuestion {
+            print(answerIndex)
             questionLabel.text = vocs.chinese[answerIndex]
         } else {
             questionLabel.text = vocs.english[answerIndex]
